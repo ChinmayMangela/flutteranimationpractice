@@ -73,8 +73,10 @@ class ColorBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       height: 100,
       width: 100,
-      decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10),
+      ),
     );
   }
 }
