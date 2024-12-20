@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/card_flipping.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/card_rotation.dart';
+import 'package:flutteranimationpractice/implicit_animation_examples/pulsating_container.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: CardFlipping()
+      home: PulsatingContainer()
     );
   }
 }

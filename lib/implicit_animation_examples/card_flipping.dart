@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutteranimationpractice/implicit_animation_examples/card_rotation.dart';
 
@@ -28,7 +27,7 @@ class _CardFlippingState extends State<CardFlipping>
 
     _animation = Tween<double>(begin: 0, end: pi).animate(_animationController);
 
-    _animationController.reverse();
+    _animationController.repeat();
   }
 
   @override
