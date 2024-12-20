@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/pulsating_container.dart';
+import 'package:flutteranimationpractice/implicit_animation_examples/color_changing_circle.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: PulsatingContainer()
+      home: ColorChangingCircle()
     );
   }
 }
