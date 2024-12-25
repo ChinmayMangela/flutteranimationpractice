@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/trasform_scale_example.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/upside_down_heart_falling_effects.dart';
+import 'package:flutteranimationpractice/implicit_animation_examples/transform_rotate_example.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: TransformScaleExample()
+      home: TransformRotateExample()
     );
   }
 }
