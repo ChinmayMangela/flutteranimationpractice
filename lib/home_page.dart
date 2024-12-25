@@ -9,34 +9,67 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _sizeAnimation;
 
-  bool addedToCart = false;
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 1500,
+      ),
+    );
 
-  void _changeCartState() {
-    setState(() {
-      addedToCart = !addedToCart;
-    });
+    _sizeAnimation = Tween<double>(begin: 0, end: 200).animate(_animationController);
+
+    _animationController.repeat(
+      reverse: true
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: GestureDetector(
-          onTap: _changeCartState,
-          child: AnimatedContainer(
-            alignment: Alignment.center,
-            height: 40,
-            width: addedToCart ? 150 : 50,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: addedToCart ? Colors.green : Colors.blue
-            ),
-            duration: const Duration(seconds: 2),
-            child: addedToCart ? const Text('Added to chart') : const Icon(Icons.shopping_cart)
+        child: AnimatedBuilder(animation: _sizeAnimation, builder: (context, child) {
+          return MyCircle(size: _sizeAnimation.value);
+        }),
+      ),
+    );
+  }
+}
+
+class MyCircle extends StatelessWidget {
+  const MyCircle({
+    super.key,
+    required this.size,
+  });
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red.withOpacity(0.2),
+            blurRadius: size,
+            spreadRadius: size,
           ),
-        ),
+        ],
       ),
     );
   }
