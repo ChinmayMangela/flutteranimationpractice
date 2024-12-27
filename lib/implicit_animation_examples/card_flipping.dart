@@ -25,7 +25,7 @@ class _CardFlippingState extends State<CardFlipping>
       ),
     );
 
-    _animation = Tween<double>(begin: 0, end: pi).animate(_animationController);
+    _animation = Tween<double>(begin: 0, end: pi * 2).animate(_animationController);
 
     _animationController.repeat();
   }
