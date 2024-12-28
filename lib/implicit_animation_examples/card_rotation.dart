@@ -24,7 +24,8 @@ class _CardRotationState extends State<CardRotation>
     );
 
     // initialize animation
-    _animation = Tween<double>(begin: 0, end: pi * 2).animate(_animationController);
+    _animation =
+        Tween<double>(begin: 0, end: pi * 2).animate(_animationController);
 
     // repeat the animation
     _animationController.repeat();
@@ -40,15 +41,17 @@ class _CardRotationState extends State<CardRotation>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()..rotateZ(_animation.value),
-                  child: const MyCard(),
-                );
-              })),
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()..rotateZ(_animation.value),
+              child: const MyCard(),
+            );
+          },
+        ),
+      ),
     );
   }
 }
