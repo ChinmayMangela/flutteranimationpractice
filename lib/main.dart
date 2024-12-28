@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/floating_heart/floating_heart_animation.dart';
+import 'package:flutteranimationpractice/implicit_animation_examples/color_changing_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: FloatingHeartAnimation2()
+      home: ColorChangingText()
     );
   }
 }

@@ -32,9 +32,9 @@ class _AnimatedSquareState extends State<AnimatedSquare>
 
     _colorAnimation = TweenSequence<Color?>(
       List.generate(
-        _colors.length,
+        _colors.length - 1,
             (index) => TweenSequenceItem<Color?>(
-          tween: ColorTween(begin: _colors[index], end: _colors[_colors.length - 1]),
+          tween: ColorTween(begin: _colors[index], end: _colors[index + 1]),
           weight: 1.0,
         ),
       ),
