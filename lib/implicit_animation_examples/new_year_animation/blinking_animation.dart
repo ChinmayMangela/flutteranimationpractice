@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/animated_star.dart';
@@ -14,12 +15,36 @@ class BlinkingAnimation extends StatefulWidget {
 class _BlinkingAnimationState extends State<BlinkingAnimation>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
+  late AnimationController _colorAnimationController;
   late List<AnimationController> _starAnimationControllers;
   late Animation<double> _blinkAnimation;
   late Animation<Offset> _slidingTextAnimation;
   late Animation<double> _opacityAnimation;
+  late Animation<Color?> _textColorAnimation;
   final int _starsCount = 30;
   final _random = Random();
+
+  List<Color> colors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+    Colors.orange,
+    Colors.purple,
+    Colors.cyan,
+    Colors.teal,
+    Colors.indigo,
+    Colors.brown,
+    Colors.pink,
+    Colors.grey,
+    Colors.amber,
+    Colors.lime,
+    Colors.deepOrange,
+    Colors.deepPurple,
+    Colors.lightBlue,
+    Colors.lightGreen,
+    Colors.blueGrey,
+  ];
 
   @override
   void initState() {
@@ -42,8 +67,6 @@ class _BlinkingAnimationState extends State<BlinkingAnimation>
       )..repeat(reverse: true);
     });
 
-
-
     _opacityAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -53,6 +76,37 @@ class _BlinkingAnimationState extends State<BlinkingAnimation>
         curve: Curves.easeInOut,
       ),
     );
+
+    _colorAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3400),
+    )..repeat();
+
+    //animation responsible for text-color
+    _textColorAnimation = TweenSequence<Color?>(
+      List.generate(
+        colors.length - 1,
+        (index) {
+          return TweenSequenceItem<Color?>(
+              tween: ColorTween(begin: colors[index], end: colors[index + 1]),
+              weight: 1.0);
+        },
+      ),
+    ).animate(
+      CurvedAnimation(
+        parent: _colorAnimationController,
+        curve: Curves.linearToEaseOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
+    for (AnimationController controller in _starAnimationControllers) {
+      controller.dispose();
+    }
   }
 
   @override
@@ -94,10 +148,16 @@ class _BlinkingAnimationState extends State<BlinkingAnimation>
             size: randomSize.toDouble(),
           );
         }),
+        BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 1.7, sigmaY: 1.7),
+          child: Container(color: Colors.transparent),
+        ),
         TextAnimation(
           animationController: _animationController,
           textAnimation: _slidingTextAnimation,
           opacityAnimation: _opacityAnimation,
+          textColorAnimation: _textColorAnimation,
+          colorAnimationController: _colorAnimationController,
         ),
       ],
     );
