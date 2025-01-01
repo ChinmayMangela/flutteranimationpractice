@@ -2,8 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/animated_star.dart';
-import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/text_animation.dart';
+import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/first_animation/animated_star.dart';
+import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/first_animation/text_animation.dart';
 
 class BlinkingAnimation extends StatefulWidget {
   const BlinkingAnimation({super.key});
@@ -107,6 +107,7 @@ class _BlinkingAnimationState extends State<BlinkingAnimation>
     for (AnimationController controller in _starAnimationControllers) {
       controller.dispose();
     }
+    _colorAnimationController.dispose();
   }
 
   @override
