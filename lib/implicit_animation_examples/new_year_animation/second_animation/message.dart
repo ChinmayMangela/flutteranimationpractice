@@ -62,7 +62,7 @@ class Message extends StatelessWidget {
             digit,
             style: _textStyle.copyWith(
               fontSize: 100,
-                color: const  Color(0xFF3C4A4A),
+                color: const Color(0xFF2D3B2E),
           ),
           ),
         );
@@ -76,7 +76,7 @@ class Message extends StatelessWidget {
       style: GoogleFonts.dancingScript(
         fontSize: 45,
         fontWeight: FontWeight.bold,
-        color: const Color(0xFF3C4A4A),
+        color: const Color(0xFF2D3B2E),
         shadows: _getTextShadows(),
       ),
     );
@@ -87,14 +87,14 @@ class Message extends StatelessWidget {
       text,
       style: _textStyle.copyWith(
         fontSize: 100,
-        color: const Color(0xFF3C4A4A),
+        color: const Color(0xFF2D3B2E),
       ),
     );
   }
 
   TextStyle get _textStyle => TextStyle(
     fontSize: 100,
-    color: const Color(0xFF3C4A4A),
+    color: const Color(0xFF2D3B2E),
     fontWeight: FontWeight.bold,
     fontFamily: 'Arial',
     shadows: _getTextShadows(),
@@ -104,8 +104,8 @@ class Message extends StatelessWidget {
     return [
       Shadow(
         blurRadius: 5.0,
-        color: Colors.black.withOpacity(0.1),
-        offset: const Offset(5, 3),
+        color: Colors.black.withOpacity(0.2),
+        offset: const Offset(4, 3),
       ),
     ];
   }

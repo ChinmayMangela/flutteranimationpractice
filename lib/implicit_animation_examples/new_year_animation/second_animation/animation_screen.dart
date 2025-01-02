@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/second_animation/gradient_background.dart';
 import 'package:flutteranimationpractice/implicit_animation_examples/new_year_animation/second_animation/message.dart';
@@ -14,6 +16,7 @@ class _AnimationScreenState extends State<AnimationScreen>
   late AnimationController _fourAnimationController;
   late AnimationController _fiveAnimationController;
   late AnimationController _zoomAnimationController;
+  late ConfettiController _confettiAnimationController;
   late Animation<Offset> _fourAnimation;
   late Animation<Offset> _fiveAnimation;
   late Animation<double> _zoomAnimation;
@@ -82,6 +85,7 @@ class _AnimationScreenState extends State<AnimationScreen>
       ),
     );
 
+    _confettiAnimationController = ConfettiController();
     _setupAnimationTriggers();
 
     _fourAnimationController.forward();
@@ -109,6 +113,7 @@ class _AnimationScreenState extends State<AnimationScreen>
             _isDigitsFloatingAnimationCompleted = true;
           });
           _zoomAnimationController.forward();
+          _confettiAnimationController.play();
         });
       }
     });
@@ -144,7 +149,21 @@ class _AnimationScreenState extends State<AnimationScreen>
             isDigitsAnimationCompleted: _isDigitsFloatingAnimationCompleted,
           ),
         ),
+        Positioned(
+          top: 0,
+          left: MediaQuery.of(context).size.width / 2,
+          child: _buildConfettiWidget(),
+        ),
       ],
+    );
+  }
+
+  Widget _buildConfettiWidget() {
+    return ConfettiWidget(
+      blastDirection: pi / 2,
+      numberOfParticles: 40,
+      gravity: 0.1,
+      confettiController: _confettiAnimationController,
     );
   }
 }
