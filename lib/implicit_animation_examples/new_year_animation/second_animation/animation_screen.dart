@@ -9,12 +9,16 @@ class AnimationScreen extends StatefulWidget {
   State<AnimationScreen> createState() => _AnimationScreenState();
 }
 
-class _AnimationScreenState extends State<AnimationScreen> with TickerProviderStateMixin {
-  late AnimationController _animationController1;
-  late AnimationController _animationController2;
+class _AnimationScreenState extends State<AnimationScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _fourAnimationController;
+  late AnimationController _fiveAnimationController;
+  late AnimationController _zoomAnimationController;
   late Animation<Offset> _fourAnimation;
   late Animation<Offset> _fiveAnimation;
+  late Animation<double> _zoomAnimation;
   bool _isFiveVisible = false;
+  bool _isDigitsFloatingAnimationCompleted = false;
 
   @override
   void initState() {
@@ -23,66 +27,122 @@ class _AnimationScreenState extends State<AnimationScreen> with TickerProviderSt
   }
 
   void _initAnimations() {
-
-    _animationController1 = AnimationController(
+    // controller responsible for controlling animation of 4
+    _fourAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2500),
+      duration: const Duration(
+        milliseconds: 2500,
+      ),
     );
 
-    _fourAnimation = Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -500))
-        .animate(_animationController1);
-
-
-    _animationController2 = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2500),
+    // this animation object is responsible for floating animation of 4
+    _fourAnimation = Tween<Offset>(
+      begin: const Offset(0, 0), // starts from initial position
+      end: const Offset(0, -500), // goes to the top of the screen
+    ).animate(
+      CurvedAnimation(
+        parent: _fourAnimationController,
+        curve: Curves.linear,
+      ),
     );
 
-    _fiveAnimation = Tween<Offset>(begin: const Offset(0, 500), end: const Offset(0, 0))
-        .animate(CurvedAnimation(
-      parent: _animationController2,
-      curve: Curves.easeOut,
-    ));
+    // controller responsible for controlling animation of 5
+    _fiveAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 2500,
+      ),
+    );
 
-    _animationController1.addStatusListener((status) {
+    // this animation object is responsible for floating animation of 4
+    _fiveAnimation = Tween<Offset>(
+      begin: const Offset(0, 500), // comes from bottom of the screen
+      end: const Offset(0, 0), // ends at the initial position i.e at the center
+    ).animate(
+      CurvedAnimation(
+        parent: _fiveAnimationController,
+        curve: Curves.linear,
+      ),
+    );
+
+    _zoomAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 2000,
+      ),
+    );
+
+    _zoomAnimation = Tween<double>(
+      begin: 0,
+      end: 1.5,
+    ).animate(
+      CurvedAnimation(
+        parent: _zoomAnimationController,
+        curve: Curves.bounceInOut,
+      ),
+    );
+
+    _setupAnimationTriggers();
+
+    _fourAnimationController.forward();
+  }
+
+  void _setupAnimationTriggers() {
+    // trigger 5's animation after 4 completes
+    _fourAnimationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        // After the first animation completes, start the second animation
         Future.delayed(const Duration(milliseconds: 500), () {
           setState(() {
             _isFiveVisible = true;
           });
-          _animationController2.forward(); // Start the second animation (for "4")
+          _fiveAnimationController
+              .forward(); // starts animation of 5 after 500 ms when animation of 4 is completed
         });
       }
     });
 
-    _animationController1.forward(); // Start the first animation (for "5")
+    // trigger zoom animation after 5 completes
+    _fiveAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+          setState(() {
+            _isDigitsFloatingAnimationCompleted = true;
+          });
+          _zoomAnimationController.forward();
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
-    _animationController1.dispose();
-    _animationController2.dispose();
     super.dispose();
+    _fourAnimationController.dispose();
+    _fiveAnimationController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          const GradientBackground(),
-          Center(
-            child: Message(
-              animationController1: _animationController1,
-              animationController2: _animationController2,
-              fourAnimation: _fourAnimation,
-              fiveAnimation: _fiveAnimation,
-              isFiveVisible: _isFiveVisible,
-            ),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(
+      children: [
+        const GradientBackground(),
+        Center(
+          child: Message(
+            fourAnimation: _fourAnimation,
+            fiveAnimation: _fiveAnimation,
+            isFiveVisible: _isFiveVisible,
+            animationController1: _fourAnimationController,
+            animationController2: _fiveAnimationController,
+            isDigitsAnimationCompleted: _isDigitsFloatingAnimationCompleted,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
