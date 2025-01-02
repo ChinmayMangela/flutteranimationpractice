@@ -60,11 +60,10 @@ class Message extends StatelessWidget {
           offset: animation.value,
           child: Text(
             digit,
-            style: const TextStyle(
+            style: _textStyle.copyWith(
               fontSize: 100,
-              color: Colors.blueAccent,
-              fontWeight: FontWeight.bold,
-            ),
+                color: const  Color(0xFF3C4A4A),
+          ),
           ),
         );
       },
@@ -75,9 +74,10 @@ class Message extends StatelessWidget {
     return Text(
       'Happy New Year',
       style: GoogleFonts.dancingScript(
-        fontSize: 55,
+        fontSize: 45,
         fontWeight: FontWeight.bold,
-        color: Colors.blue,
+        color: const Color(0xFF3C4A4A),
+        shadows: _getTextShadows(),
       ),
     );
   }
@@ -85,13 +85,29 @@ class Message extends StatelessWidget {
   Widget _buildStaticText(String text) {
     return Text(
       text,
-      style: _textStyle,
+      style: _textStyle.copyWith(
+        fontSize: 100,
+        color: const Color(0xFF3C4A4A),
+      ),
     );
   }
 
-  TextStyle get _textStyle => const TextStyle(
-        fontSize: 100,
-        color: Colors.blueAccent,
-        fontWeight: FontWeight.bold,
-      );
+  TextStyle get _textStyle => TextStyle(
+    fontSize: 100,
+    color: const Color(0xFF3C4A4A),
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Arial',
+    shadows: _getTextShadows(),
+  );
+
+  List<Shadow> _getTextShadows() {
+    return [
+      Shadow(
+        blurRadius: 5.0,
+        color: Colors.black.withOpacity(0.1),
+        offset: const Offset(5, 3),
+      ),
+    ];
+  }
 }
+

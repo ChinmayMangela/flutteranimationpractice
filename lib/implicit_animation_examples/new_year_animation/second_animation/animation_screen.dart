@@ -73,8 +73,8 @@ class _AnimationScreenState extends State<AnimationScreen>
     );
 
     _zoomAnimation = Tween<double>(
-      begin: 0,
-      end: 1.5,
+      begin: 1,
+      end: 1.2,
     ).animate(
       CurvedAnimation(
         parent: _zoomAnimationController,
