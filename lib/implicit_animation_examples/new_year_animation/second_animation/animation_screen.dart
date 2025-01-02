@@ -78,7 +78,7 @@ class _AnimationScreenState extends State<AnimationScreen>
     ).animate(
       CurvedAnimation(
         parent: _zoomAnimationController,
-        curve: Curves.bounceInOut,
+        curve: Curves.bounceIn,
       ),
     );
 
@@ -136,9 +136,11 @@ class _AnimationScreenState extends State<AnimationScreen>
           child: Message(
             fourAnimation: _fourAnimation,
             fiveAnimation: _fiveAnimation,
+            zoomAnimation: _zoomAnimation,
             isFiveVisible: _isFiveVisible,
             animationController1: _fourAnimationController,
             animationController2: _fiveAnimationController,
+            zoomAnimationController: _zoomAnimationController,
             isDigitsAnimationCompleted: _isDigitsFloatingAnimationCompleted,
           ),
         ),
