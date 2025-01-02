@@ -161,8 +161,10 @@ class _AnimationScreenState extends State<AnimationScreen>
   Widget _buildConfettiWidget() {
     return ConfettiWidget(
       blastDirection: pi / 2,
-      numberOfParticles: 40,
-      gravity: 0.1,
+      blastDirectionality: BlastDirectionality.explosive,
+    maxBlastForce: 100,
+        numberOfParticles: 100,
+      gravity: 0.4,
       confettiController: _confettiAnimationController,
     );
   }
